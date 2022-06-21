@@ -1,32 +1,81 @@
-// Create a class here
-// =====================================
-class Episode {
-  constructor(title, duration, hasBeenWatched) {
+// Modify the code here
+// ======================
+
+class Show {
+  constructor(title, numberOfSeasons) {
     this.title = title;
-    this.duration = duration;
-    this.hasBeenWatched = hasBeenWatched;
+    this.numberOfSeasons = numberOfSeasons;
+    this.ratings = [];
+    this.averageRating = 0;
+  }
+  addRating(num) {
+    this.ratings.push(num);
+      let sum = 0;
+      for (let num of this.ratings){
+        sum += rating;
+      }
+      this.averageRating = sum / this.rating.length;
   }
 }
 
-let firstEpisode = new Episode("Love", 40, true);
-let secondEpisode = new Episode("Death", 40, false);
-let thirdEpisode = new Episode("Robot", 40, false);
-// =====================================
+// ======================
 
-document.querySelector("#first-episode-info").innerText = `Episode: ${
-  firstEpisode.title
-}
-Duration: ${firstEpisode.duration} min
-${firstEpisode.hasBeenWatched ? "Already watched" : "Not yet watched"}`;
+const tau = new Show('The Story of Tau', 5);
+const colin = new Show('The Hero of Old Meldrum', 3);
+const clara = new Show('The Bugs of Isla Clara', 6);
 
-document.querySelector("#second-episode-info").innerText = `Episode: ${
-  secondEpisode.title
-}
-Duration: ${secondEpisode.duration} min
-${secondEpisode.hasBeenWatched ? "Already watched" : "Not yet watched"}`;
+const shows = [tau, colin, clara];
 
-document.querySelector("#third-episode-info").innerText = `Episode: ${
-  thirdEpisode.title
+const body = document.querySelector('body');
+const refresh = document.querySelector('#refresh');
+
+refresh.addEventListener('click', () => {
+  removeShows();
+  addRandomRatings();
+  updateShows();
+})
+
+const updateShows = () => {
+  for (let show of shows) {
+    const showPane = document.createElement('div');
+    showPane.classList.add('series-frame');
+    const showHeading = document.createElement('h2');
+    showHeading.innerText = show.title;
+    const showDetails = document.createElement('p');
+    const seasons = document.createElement('p');
+    seasons.innerText = show.numberOfSeasons + ' seasons';
+    const ratings = document.createElement('p');
+    ratings.innerText = show.averageRating > 0 ? show.ratings.length + ' ratings\n' + show.averageRating.toFixed(1) + ' stars' : 'No ratings yet';
+    showDetails.append(seasons);
+    showDetails.append(ratings);
+    showPane.append(showHeading);
+    showPane.append(showDetails);
+    body.append(showPane);
+  }
+};
+
+const removeShows = () => {
+  const children = [];
+  for (let childNode of body.childNodes) {
+    children.push(childNode);
+  }
+  for (let child of children) {
+    if (child.tagName == 'DIV') {
+      body.removeChild(child);
+    }
+  }
 }
-Duration: ${thirdEpisode.duration} min
-${thirdEpisode.hasBeenWatched ? "Already watched" : "Not yet watched"}`;
+
+const addRandomRatings = () => {
+  for (let show of shows) {
+    if (Math.random() >= 0.2) {
+      const numberOfRatings = Math.floor(Math.random() * 4 + 1);
+      for (let i = 0; i < numberOfRatings; i++) {
+        const rating = Math.floor(Math.random() * 5 + 1);
+        show.addRating(rating);
+      }
+    }
+  }
+}
+
+updateShows();
