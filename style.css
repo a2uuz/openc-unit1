@@ -3,22 +3,32 @@
   padding: 0;
   margin: 0;
 }
-body {
+body, button {
   background-color: #111;
-  color: #eee;
-  font-family: "Roboto Slab", serif;
+  color: #EEE;
+  font-family: 'Roboto Slab', serif;
 }
 
 .series-frame {
   max-width: 600px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  border: 2px solid #eee;
+  border: 2px solid #EEE;
   margin: 30px;
   padding: 10px;
 }
 
-.series-frame h2 {
+#refresh {
+  float: right;
   margin-right: 20px;
+  font-size: 1.2em;
+  font-weight: 200;
+  padding: 10px;
+}
+
+#refresh:hover {
+  background-color: #000090;
+  cursor: pointer;
 }
